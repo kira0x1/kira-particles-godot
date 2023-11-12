@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://ri8f62ump2n"]
+
+[ext_resource type="PackedScene" uid="uid://cq7a1ju20iojp" path="res://prefabs/plane_floor.tscn" id="1_6twmq"]
+
+[sub_resource type="Environment" id="Environment_p7784"]
+background_energy_multiplier = 0.12
+ambient_light_source = 2
+ambient_light_color = Color(0.196078, 0.196078, 0.196078, 1)
+tonemap_mode = 2
+ssao_radius = 1.57
+ssao_intensity = 3.64
+ssao_detail = 1.0
+ssao_horizon = 0.15
+sdfgi_use_occlusion = true
+glow_enabled = true
+glow_intensity = 1.86
+glow_bloom = 0.34
+volumetric_fog_density = 0.018
+volumetric_fog_albedo = Color(0.243137, 0.117647, 0.105882, 1)
+volumetric_fog_emission = Color(0.156863, 0.101961, 0.168627, 1)
+volumetric_fog_anisotropy = -0.18
+volumetric_fog_length = 68.68
+volumetric_fog_detail_spread = 1.0
+volumetric_fog_ambient_inject = 1.22
+volumetric_fog_sky_affect = 0.091
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_so2ps"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_tgl7a"]
+
+[node name="world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p7784")
+
+[node name="Plane_Floor" parent="." instance=ExtResource("1_6twmq")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.943965, 8.83377, 2.04057)
+light_color = Color(1, 0.941176, 0.921569, 1)
+light_energy = 10.188
+light_volumetric_fog_energy = 3.365
+shadow_enabled = true
+shadow_opacity = 0.8
+omni_range = 18.9323
+
+[node name="Sphere" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.79152, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Sphere"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sphere/RigidBody3D"]
+shape = SubResource("SphereShape3D_so2ps")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sphere/RigidBody3D"]
+mesh = SubResource("SphereMesh_tgl7a")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.523659, -0.291432, 0.80053, 0, 0.939669, 0.342085, -0.851928, -0.179136, 0.492066, 7.25438, 6.37037, 4.45909)
+fov = 51.7
